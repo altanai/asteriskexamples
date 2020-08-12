@@ -187,6 +187,28 @@ You can use safe_asterisk to enable auto restart after crash thus minimizing dow
 
 One can continue on the sandbox environment to run the modules I describe in this repo . 
 
+Asterisk is an open source framework for building communications applications.
+
+**Default installation paths**
+Path Description
+/etc/asterisk Configuration files
+/usr/sbin Location of binary executable
+/var/log/asterisk message(error) logs and CDR
+/usr/lib/asterisk/modules Component module libraries
+
+**Default ports**
+
+Protocol Port number Transport
+SIP 5060/5061 TCP/UDP
+IAX2 4569 UDP
+MGCP 2727 UDP
+SCCP 2000 TCP
+RTP 10,00 – 20,000 UDP
+Manager 5038 TCP
+H323 1720 TCP
+Dundi 4520 UDP
+Unistim 5000 UDP
+
 ## configuration 
 
 Listen address for SIP in sip.conf , Listen on
