@@ -194,6 +194,28 @@ show version
 Asterisk 17.6.0 built by root @ altanai-Inspiron-15-5578 on a x86_64 running Linux on 2020-07-30 15:33:43 UTC
 ```
 
+Asterisk is an open source framework for building communications applications.
+
+**Default installation paths**
+Path Description
+/etc/asterisk Configuration files
+/usr/sbin Location of binary executable
+/var/log/asterisk message(error) logs and CDR
+/usr/lib/asterisk/modules Component module libraries
+
+**Default ports**
+
+Protocol Port number Transport
+SIP 5060/5061 TCP/UDP
+IAX2 4569 UDP
+MGCP 2727 UDP
+SCCP 2000 TCP
+RTP 10,00 – 20,000 UDP
+Manager 5038 TCP
+H323 1720 TCP
+Dundi 4520 UDP
+Unistim 5000 UDP
+
 ## configuration 
 
 Listen address for SIP in sip.conf , Listen on
