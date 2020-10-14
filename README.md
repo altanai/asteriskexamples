@@ -3,6 +3,7 @@
 Asterix open-source telephony Server can be used to build multitude of applications . 
 
 ## Installation and setup 
+
 check the asterisk available version  from https://downloads.asterisk.org/pub/telephony/asterisk/
 use wget to download 
 
@@ -183,9 +184,15 @@ asterisk  28922 altanai   19u  IPv4 3449578      0t0  UDP *:4520
 
 ````
 
-You can use safe_asterisk to enable auto restart after crash thus minimizing downtime . It also creates core dump file .
+You can use safe_asterisk to enable auto restart after crash thus minimizing downtime. It also creates core dump file .
 
-One can continue on the sandbox environment to run the modules I describe in this repo . 
+One can continue on the sandbox environment to run the modules I describe in this repo.
+
+show version
+```commandline
+*CLI> core show version 
+Asterisk 17.6.0 built by root @ altanai-Inspiron-15-5578 on a x86_64 running Linux on 2020-07-30 15:33:43 UTC
+```
 
 ## configuration 
 

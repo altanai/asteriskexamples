@@ -1,0 +1,1278 @@
+<!doctype html>
+
+<!--
+ARI TESTER
+
+Copyright © 2016 Daniele Pallastrelli
+
+Permission is hereby granted, free of charge, to any person obtaining a 
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the 
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included 
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR 
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
+OTHER DEALINGS IN THE SOFTWARE.
+-->
+
+<html lang="en-US">
+<head>
+
+    <title>ARI Tester</title>
+
+    <style>
+
+        html, body {
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* fonts */
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        h1 {
+            font-size: 25px;
+            line-height: 1.3em;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #666;
+            line-height: 1.3em;
+        }
+
+        .flex-container {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-flow: row wrap;
+            flex-flow: row wrap;
+            /*  text-align: center;*/
+            align-items: stretch;
+        }
+
+        .flex-container > * {
+            /*  padding: 15px;*/
+            -webkit-flex: 1 100%;
+            flex: 1 100%;
+        }
+
+        /*
+        .article {
+          text-align: left;
+        }
+        */
+
+        header, footer {
+            padding: 20px 40px;
+            background-color: #222;
+            color: #fff;
+        }
+
+        .loginbox {
+            background: #eee;
+        }
+
+        .loginbox {
+            padding: 15px;
+            order: 2;
+            flex: 0 0 auto;
+            height: 310px;
+        }
+
+        .descriptionbox {
+            /*  order: 1;
+              flex: 0 0 auto;*/
+            text-align: left;
+            font-style: italic;
+            width: 250px;
+            height: 100px;
+            margin: 20px 0px 20px 0px;
+        }
+
+        .loginbtnsbox {
+            margin: 15px 0px 20px 0px;
+        }
+
+        .menu ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        /*
+        .optionsbox {
+          width: 250px;
+          height: 50px;
+          margin: 20px 0px 20px 0px;
+        }
+        */
+        #btncmdsbox {
+            order: 3;
+            flex: 0 0 auto;
+        }
+
+        #bridgecmdsbox {
+            order: 4;
+            flex: 0 0 auto;
+        }
+
+        #devicebox {
+            order: 5;
+            flex: 0 0 auto;
+        }
+
+        #eventbox {
+            order: 6;
+            /*flex: 1 0 auto;*/
+
+            height: 200px;
+            border-top: 1px solid #eee;
+            border-left: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            border-right: 1px solid #eee;
+            /*padding: 10px; */
+            font-size: 80%;
+            overflow: auto;
+            background-color: white;
+            /*margin: 20px 0px 20px 0px;*/
+            margin: 0px 5px 10px 5px;
+        }
+
+        #eventbox ul {
+            list-style: none;
+            /*margin-left: 0;*/
+            padding-left: 2px;
+            /*width: 10em;*/
+        }
+
+        footer {
+            order: 7;
+        }
+
+        .cmdsbox {
+            padding: 15px;
+        }
+
+        .cmdsbox button {
+            width: 150px;
+        }
+
+        .cmdsbox button:hover {
+            background: #c1c1c1;
+        }
+
+        .cmdsbox input {
+            width: 100px;
+        }
+
+        .cmdsbox select {
+            width: 100px;
+        }
+
+        .cmdsbox label {
+            margin-left: 20px;
+            font-size: 90%;
+        }
+
+        .cmdsbox input[type="checkbox"] {
+            margin: 0;
+            padding: 0;
+            width: 20px;
+        }
+
+        .cmds ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+        .sectiontitle {
+            background: #cfcfcf;
+            color: #383838;
+            height: 26px;
+            font-size: 110%;
+            font-weight: bold;
+            padding-left: 10px;
+            padding-top: 6px;
+        }
+
+        table {
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .rowselected {
+            background-color: #e6eef4;
+        }
+
+        .rowunselected {
+            background-color: white;
+        }
+
+        th {
+            background-color: #eee;
+        }
+
+        .tablebox {
+            height: 150px;
+            /*padding: 15px 0px 15px 0px;*/
+            border: 1px solid #ababab;
+            overflow: auto;
+        }
+
+        .infomsg {
+            color: black;
+        }
+
+        .errormsg {
+            color: red;
+        }
+
+        .warningmsg {
+            color: orange;
+        }
+
+        .arieventmsg {
+            color: blue;
+        }
+
+        .connectionmsg {
+            color: pink;
+        }
+
+        .requestmsg {
+            color: grey;
+        }
+
+        .responsemsg {
+            color: grey;
+        }
+
+
+        /*
+        .loginbox ul {
+          list-style-type: none;
+          padding: 0;
+        }
+
+        .loginbox ul a {
+          text-decoration: none;
+        }
+
+        @media all and (min-width: 768px) {
+          .loginbox {text-align: left;-webkit-flex: 1 auto;flex:1 auto; -webkit-order: 1; order: 1;}
+          .article {-webkit-flex: 5 0px; flex: 5 0px; -webkit-order: 2; order: 2;}
+          footer {-webkit-order: 3; order: 3;}
+        }
+        */
+
+        /* alignment of options grid */
+        li {
+            display: table-row;
+        }
+
+        li div {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .gridalign ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        /* modal box styles: */
+        .modalDialog {
+            position: fixed;
+            font-family: Arial, Helvetica, sans-serif;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 99999;
+            opacity: 0;
+            -webkit-transition: opacity 400ms ease-in;
+            -moz-transition: opacity 400ms ease-in;
+            transition: opacity 400ms ease-in;
+            pointer-events: none;
+        }
+
+        .modalDialog:target {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modalDialog > div {
+            width: 400px;
+            position: relative;
+            margin: 10% auto;
+            padding: 5px 20px 13px 20px;
+            border-radius: 10px;
+            background: #fff;
+            background: -moz-linear-gradient(#fff, #999);
+            background: -webkit-linear-gradient(#fff, #999);
+            background: -o-linear-gradient(#fff, #999);
+        }
+
+        .close {
+            background: #606061;
+            color: #FFFFFF;
+            line-height: 25px;
+            position: absolute;
+            right: -12px;
+            text-align: center;
+            top: -10px;
+            width: 24px;
+            text-decoration: none;
+            font-weight: bold;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            border-radius: 12px;
+            -moz-box-shadow: 1px 1px 3px #000;
+            -webkit-box-shadow: 1px 1px 3px #000;
+            box-shadow: 1px 1px 3px #000;
+        }
+
+        .close:hover {
+            background: #00d9ff;
+        }
+
+    </style>
+
+    <script>
+
+        "use strict"
+
+        var tester = {};
+
+        ////////////////////////////////////////////////////////////////////////
+        // ui functions
+
+        // Table class
+
+        function Table(id, desc) {
+            this.table = document.getElementById(id);
+            this.description = desc; // descriptive name of the table
+            this.selection = null; // element own id
+
+            var self = this;
+            this.table.onclick = function (e) {
+                e = e || window.event;
+                var who = e.target || e.srcElement;
+                if (who.tagName == 'TD' && who.id != '') {
+                    if (self.selection == null) { // no previous selection
+                        // just select
+                        who.parentNode.className = "rowselected";
+                        self.selection = who.id;
+                        console.log('current ' + self.description + ' id = ' + who.id);
+                    } else if (self.selection == who.id) { // same selection
+                        // remove selection
+                        who.parentNode.className = "rowunselected";
+                        self.selection = null;
+                        console.log('reset ' + self.description + ' selection');
+                    } else { // other selection
+                        // unselect previous
+                        var previous = document.getElementById(self.selection);
+                        if (previous != null)
+                            previous.parentNode.className = "rowunselected";
+                        // select new
+                        who.parentNode.className = "rowselected";
+                        self.selection = who.id;
+                        console.log('current ' + self.description + ' id = ' + who.id);
+                    }
+                }
+            }
+        }
+
+        Table.prototype.addRow = function (id, data) {
+            var row = this.table.insertRow(1);
+            for (var i = 0; i < data.length; ++i) {
+                var cell = row.insertCell(i);
+                cell.innerHTML = data[i];
+                cell.id = id;
+            }
+        }
+
+        Table.prototype.removeRow = function (id) {
+            for (var i = 1; i < this.table.rows.length; ++i) {
+                var row = this.table.rows[i];
+                if (row.cells[0].innerHTML == id) {
+                    this.table.deleteRow(i);
+                    break;
+                }
+            }
+        }
+
+        Table.prototype.updateRow = function (id, data) {
+            for (var i = 1; i < this.table.rows.length; ++i) {
+                var row = this.table.rows[i];
+                if (row.cells[0].id == id) {
+                    for (var i = 0; i < data.length; ++i)
+                        row.cells[i].innerHTML = data[i];
+                    break;
+                }
+            }
+        }
+
+        // end Table class
+
+        function append(text, liclass = "infomsg") {
+            document.getElementById("events").insertAdjacentHTML(
+                'beforeend',
+                '<li class="' + liclass + '">' + text + '</li>'
+            );
+        }
+
+        var chTable;
+        var bridgeTable;
+
+        function onLoad() {
+            chTable = new Table('channellist', 'channel');
+            bridgeTable = new Table('bridgelist', 'bridge');
+        }
+
+        // channels view
+
+        function addChannelToView(channel) {
+            chTable.addRow(channel.id, [channel.id, channel.name, channel.state]);
+        }
+
+        function removeChannelToView(id) {
+            chTable.removeRow(id);
+        }
+
+        function updateChannelView(channel) {
+            chTable.updateRow(channel.id, [channel.id, channel.name, channel.state]);
+        }
+
+        // bridges view
+
+        function addBridgeToView(bridge) {
+            bridgeTable.addRow(bridge.id, [bridge.id, bridge.technology, bridge.bridge_type, bridge.channels.join('\n')]);
+        }
+
+        function removeBridgeToView(id) {
+            bridgeTable.removeRow(id);
+        }
+
+        function updateBridgeView(bridge) {
+            bridgeTable.updateRow(bridge.id, [bridge.id, bridge.technology, bridge.bridge_type, bridge.channels.join('\n')]);
+        }
+
+        // devices view
+
+        function updateDeviceView(device_state) {
+            var name = device_state.name;
+            var table = document.getElementById("devicelist");
+            for (var i = 1; i < table.rows.length; ++i) {
+                var row = table.rows[i];
+                if (row.cells[0].innerHTML == name) {
+                    // found: update and exit
+                    row.cells[1].innerHTML = device_state.state;
+                    return;
+                }
+            }
+            // not found: insert a new row
+            var row = table.insertRow(1);
+            var cell1 = row.insertCell(0);
+            cell1.innerHTML = name;
+            cell1.id = name;
+            var cell2 = row.insertCell(1);
+            cell2.innerHTML = device_state.state;
+            cell2.id = name;
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        // ari functions
+
+        // http request
+        function httpSend(act, cmd, body) {
+            var req = new XMLHttpRequest();
+            var url = "http://" + tester.ip + "/ari/" + cmd;
+            console.log("requesting: " + act + " " + url);
+            append(act + " " + url, "requestmsg");
+            req.open(act, url, true, tester.user, tester.psw);
+            if (body != null)
+                req.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            req.addEventListener("load", function () {
+                console.log('http ' + act + ' sent');
+                var statusType = req.status / 100;
+                var msgClass = "responsemsg";
+                if (statusType == 4 || statusType == 5)
+                    msgClass = "errormsg";
+                append(req.status.toString() + " " + req.statusText + req.responseText, msgClass);
+            });
+            req.addEventListener("error", function () {
+                console.log('http ' + act + ' error');
+                append('http ' + act + ' error', "errormsg");
+            });
+            req.send(body);
+        }
+
+        // subscribe for all SIP channel events:
+        function subscribe() {
+            //httpSend( 'POST', 'applications/'+tester.app+'/subscription?eventSource=endpoint:SIP' );
+
+            // subscribe for all events from channels,endpoint,bridge and devices source
+            httpSend('POST', 'applications/' + tester.app + '/subscription?eventSource=channel:,endpoint:,bridge:,deviceState:', null);
+        }
+
+        // find a channel in an event and return a descriptor of the channel
+        function getChannelFromEvent(ev) {
+            if (ev.channel != null) {
+                var ch = {};
+                ch.id = ev.channel.id;
+                ch.name = ev.channel.name;
+                ch.state = ev.channel.state;
+                return ch;
+            }
+            return null;
+        }
+
+        var eventActions = {
+            'ChannelCreated': function (event) {
+                var channel = event.channel;
+                console.log('channel created: ' + channel.id + " " + channel.name + " " + channel.state);
+                addChannelToView(channel);
+            },
+            'ChannelDestroyed': function (event) {
+                var channel = event.channel;
+                console.log('channel destroyed: ' + channel.id + " " + channel.name + " " + channel.state);
+                removeChannelToView(channel.id);
+            },
+            'ChannelStateChange': function (event) {
+                var channel = event.channel;
+                console.log('channel state changed: ' + channel.id + " " + channel.name + " " + channel.state);
+                updateChannelView(channel);
+            },
+            'BridgeCreated': function (event) {
+                var bridge = event.bridge;
+                console.log('bridge created: ' + bridge.id + " " + bridge.technology + " " + bridge.bridge_type);
+                addBridgeToView(bridge);
+            },
+            'BridgeDestroyed': function (event) {
+                var bridge = event.bridge;
+                console.log('bridge destroyed: ' + bridge.id + " " + bridge.technology + " " + bridge.bridge_type);
+                removeBridgeToView(bridge.id);
+            },
+            'ChannelEnteredBridge': function (event) {
+                var bridge = event.bridge;
+                console.log('channel entered bridge: ' + bridge.id + " " + event.channel.name);
+                updateBridgeView(bridge);
+            },
+            'ChannelLeftBridge': function (event) {
+                var bridge = event.bridge;
+                console.log('channel left bridge: ' + bridge.id + " " + event.channel.name);
+                updateBridgeView(bridge);
+            },
+            'DeviceStateChanged': function (event) {
+                console.log('device state: ' + event.device_state.name + " " + event.device_state.state);
+                updateDeviceView(event.device_state);
+            }
+        };
+
+        function parseEvent(json) {
+            var event = JSON.parse(json);
+            console.log(event.type);
+            var action = eventActions[event.type];
+            if (action != undefined) action(event);
+        }
+
+        function doLogin() {
+            // var ip = location.host;
+            // var user = document.getElementById("username").value;
+            // var psw = document.getElementById("secret").value;
+            // var app = document.getElementById("application").value;
+
+            // var ip = "192.168.1.114:8088";
+            var ip = "127.0.0.1:8020";
+            var user = "asterisk";
+            var psw = "asterisk";
+            var app = "hello-world";
+
+            document.getElementById("username").value = user;
+            document.getElementById("secret").value = psw
+            document.getElementById("application").value = app;
+
+            tester.ip = ip;
+            tester.user = user;
+            tester.psw = psw;
+            tester.app = app;
+
+            var service = new WebSocket('ws://' + ip + '/ari/events?api_key=' + user + ':' + psw + '&app=' + app + '&subscribeAll=true');
+            tester.socket = service;
+
+            service.onmessage = function (event) {
+                append(event.data, "arieventmsg");
+                parseEvent(event.data);
+            }
+            
+            service.onopen = function () {
+                append("Connected", "connectionmsg");
+                subscribe();
+                document.getElementById("logoff").disabled = 0;
+                document.getElementById("login").disabled = 1;
+            }
+            
+            service.onclose = function () {
+                append("Disconnected", "connectionmsg");
+                document.getElementById("logoff").disabled = 1;
+                document.getElementById("login").disabled = 0;
+            }
+            
+            service.onerror = function () {
+                append("Connection error", "errormsg");
+            }
+        }
+
+        function doLogoff() {
+            tester.socket.close();
+        }
+
+        // channel functions
+
+        function getExtension(id) {
+            var ext = document.getElementById(id).value;
+            if (ext.indexOf('/') == -1) ext = "pjsip/" + ext;
+            return ext;
+        }
+
+        function getTech(id) {
+            var ext = document.getElementById(id).value;
+            if (ext.indexOf(':') == -1) ext = "pjsip:" + ext;
+            return ext;
+        }
+
+        function getDTMF() {
+            var dtmf = document.getElementById("dtmf").value;
+            return dtmf;
+        }
+
+        function doCreateChannel() {
+            var ext = getExtension("ext");
+            var id = document.getElementById("createchid").value;
+            if (id)
+                httpSend('POST', 'channels/create?endpoint=' + ext + '&app=' + tester.app + '&channelId=' + id, null);
+            else
+                httpSend('POST', 'channels/create?endpoint=' + ext + '&app=' + tester.app, null);
+        }
+
+        function doCreateChAndOriginate() {
+            var ext = getExtension("createchandoriginate_ext");
+            var callerId = document.getElementById("createchandoriginate_callerid").value;
+            var sipHeaders = document.getElementById('sip_header').value;
+            sipHeaders = '{"variables":{' + sipHeaders + '}}';
+            var url = 'channels?endpoint=' + ext + '&app=' + tester.app;
+            if (callerId) url = url + "&callerId=" + callerId;
+            httpSend('POST', url, sipHeaders);
+        }
+
+        function doDialCh() {
+            if (chTable.selection != null) {
+                var sipHeaders = document.getElementById('sip_header').value;
+                sipHeaders = '{"variables":{' + sipHeaders + '}}';
+                httpSend('POST', 'channels/' + chTable.selection + '/dial', sipHeaders);
+            }
+        }
+
+        function doDTMF() {
+            if (chTable.selection != null) {
+                var dtmf = getDTMF();
+                httpSend('POST', 'channels/' + chTable.selection + '/dtmf?dtmf=' + dtmf, null);
+            }
+        }
+
+        function doHangup() {
+            if (chTable.selection != null) {
+                httpSend('DELETE', 'channels/' + chTable.selection, null);
+            }
+        }
+
+        function doAnswer() {
+            if (chTable.selection != null) {
+                httpSend('POST', 'channels/' + chTable.selection + '/answer', null);
+            }
+        }
+
+        function doRing() {
+            if (chTable.selection != null) {
+                httpSend('POST', 'channels/' + chTable.selection + '/ring', null);
+            }
+        }
+
+        function doStopRing() {
+            if (chTable.selection != null) {
+                httpSend('DELETE', 'channels/' + chTable.selection + '/ring', null);
+            }
+        }
+
+        function doMute() {
+            var direction = document.getElementById("mutedirection").value;
+            if (chTable.selection != null) {
+                httpSend('POST', 'channels/' + chTable.selection + '/mute?direction=' + direction, null);
+            }
+        }
+
+        function doUnMute() {
+            var direction = document.getElementById("mutedirection").value;
+            if (chTable.selection != null) {
+                httpSend('DELETE', 'channels/' + chTable.selection + '/mute?direction=' + direction, null);
+            }
+        }
+
+        function doHold() {
+            if (chTable.selection != null) {
+                httpSend('POST', 'channels/' + chTable.selection + '/hold', null);
+            }
+        }
+
+        function doUnHold() {
+            if (chTable.selection != null) {
+                httpSend('DELETE', 'channels/' + chTable.selection + '/hold', null);
+            }
+        }
+
+        function doMoh() {
+            if (chTable.selection != null) {
+                httpSend('POST', 'channels/' + chTable.selection + '/moh', null);
+            }
+        }
+
+        function doEndMoh() {
+            if (chTable.selection != null) {
+                httpSend('DELETE', 'channels/' + chTable.selection + '/moh', null);
+            }
+        }
+
+        function doSilence() {
+            if (chTable.selection != null) {
+                httpSend('POST', 'channels/' + chTable.selection + '/silence', null);
+            }
+        }
+
+        function doEndSilence() {
+            if (chTable.selection != null) {
+                httpSend('DELETE', 'channels/' + chTable.selection + '/silence', null);
+            }
+        }
+
+        function doSnoop() {
+            if (chTable.selection != null) {
+                httpSend('POST', 'channels/' + chTable.selection + '/snoop?app=' + tester.app + '&spy=both', null);
+            }
+        }
+
+        function doRedirect() {
+            var ext = getExtension("redirect_ext");
+            if (chTable.selection != null) {
+                httpSend('POST', 'channels/' + chTable.selection + '/redirect?endpoint=' + ext, null);
+            }
+        }
+
+        function doContinueInDialplan() {
+            var context = document.getElementById("dp_context").value;
+            var ext = document.getElementById("dp_ext").value;
+            if (chTable.selection != null) {
+                httpSend('POST', 'channels/' + chTable.selection + '/continue?context=' + context + '&extension=' + ext + '&priority=1', null);
+            }
+        }
+
+        function doSetVariable() {
+            if (chTable.selection != null) {
+                const k = document.getElementById("variable_key").value;
+                const v = document.getElementById("variable_value").value;
+                const variable = '{"variable":"' + k + '", "value":"' + v + '"}';
+                httpSend('POST', 'channels/' + chTable.selection + '/variable', variable);
+            }
+        }
+
+        // bridge functions
+
+        function doCreateBridge() {
+            var type = document.getElementById("bridgetype").value;
+            var att1 = document.getElementById("dtmfev");
+            type += (att1.checked ? att1.value : "");
+            var att2 = document.getElementById("proxym");
+            type += (att2.checked ? att2.value : "");
+            httpSend('POST', 'bridges?type=' + type, null);
+        }
+
+        function doDeleteBridge() {
+            if (bridgeTable.selection != null) {
+                httpSend('DELETE', 'bridges/' + bridgeTable.selection, null);
+            }
+        }
+
+        function doAddChToBridge() {
+            if (bridgeTable.selection != null && chTable.selection != null) {
+                var role = document.getElementById("chrole").value;
+                httpSend('POST', 'bridges/' + bridgeTable.selection + '/addChannel?channel=' + chTable.selection + '&role=' + role, null);
+            }
+        }
+
+        function doRemoveChFromBridge() {
+            if (bridgeTable.selection != null && chTable.selection != null) {
+                httpSend('POST', 'bridges/' + bridgeTable.selection + '/removeChannel?channel=' + chTable.selection, null);
+            }
+        }
+
+        function doDial() {
+            var from = getExtension("from");
+            var to = document.getElementById("to").value;
+            var context = document.getElementById("context").value;
+//  httpSend( 'POST', 'channels?endpoint=SIP/'+from+'&extension='+to+"&context="+context+"&callerId="+from, null );
+            httpSend('POST', 'channels?endpoint=' + from + '&extension=' + to + "&context=" + context + "&callerId=" + from, null);
+        }
+
+        function doMohBridge() {
+            if (bridgeTable.selection != null) {
+                httpSend('POST', 'bridges/' + bridgeTable.selection + '/moh', null);
+            }
+        }
+
+        function doStopMohBridge() {
+            if (bridgeTable.selection != null) {
+                httpSend('DELETE', 'bridges/' + bridgeTable.selection + '/moh', null);
+            }
+        }
+
+        function doRecordBridge() {
+            if (bridgeTable.selection != null) {
+                httpSend('POST', 'bridges/' + bridgeTable.selection + '/record?name=' + bridgeTable.selection + '&format=wav&maxDurationSeconds=60&ifExists=overwrite', null);
+            }
+        }
+
+        function doStopRecordBridge() {
+            if (bridgeTable.selection != null) {
+                httpSend('POST', 'recordings/live/' + bridgeTable.selection + '/stop', null);
+            }
+        }
+
+        // endpoints functions
+
+        function doSendMessage() {
+            var msg = document.getElementById("textmsg").value;
+            httpSend('PUT',
+                'endpoints/sendMessage?to=' + getTech("msgto")
+                + '&from=' + getTech("msgto")
+                + '&body=' + msg,
+                null);
+        }
+
+
+    </script>
+</head>
+
+<body onload="onLoad()">
+
+<div class="flex-container">
+
+    <header>
+        <h1>Asterisk&trade; ARI Tester</h1>
+    </header>
+
+    <div class="loginbox">
+
+        <div class="descriptionbox">
+            This is a tester of the ARI Asterisk REST API. You can login with a
+            valid, appropriately permissioned username and secret and a stasis application.
+        </div>
+
+        <div class="gridalign">
+            <ul>
+                <li>
+                    <div><label for="username">Username:</label></div>
+                    <div><input id="username"/></div>
+                </li>
+                <li>
+                    <div><label for="secret">Secret:</label></div>
+                    <div><input type="password" id="secret"/></div>
+                </li>
+                <li>
+                    <div><label for="application">Application:</label></div>
+                    <div><input id="application"/></div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="loginbtnsbox">
+            <button id="login" onClick="doLogin()">Login</button>
+            <button id="logoff" disabled=1 onClick="doLogoff()">Logoff</button>
+        </div>
+
+        <div class="menu">
+            <ul>
+                <!-- <li><a href="#optionsDialog">options</a></li> TODO -->
+                <li><a href="#aboutDialog">about</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div id="btncmdsbox" class="cmdsbox">
+
+        <div class="sectiontitle">
+            Channels
+        </div>
+
+        <div class="tablebox">
+            <table id="channellist" class="table" border="1" width=700>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>State</th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="cmds" class="gridalign">
+            <ul>
+                <li>
+                    <div>
+                        <button onClick="doCreateChannel()" id="createch" title="Create a channel">Create Only</button>
+                    </div>
+                    <div><label for="ext">Ext:</label></div>
+                    <div><input id="ext"></div>
+                    <div><label for="createchid">Id:</label></div>
+                    <div><input id="createchid"></div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doCreateChAndOriginate()" id="createchorig"
+                                title="Create a channel and dial <ext>">Create And Dial
+                        </button>
+                    </div>
+                    <div><label for="createchandoriginate_ext">Ext:</label></div>
+                    <div><input id="createchandoriginate_ext"></div>
+                    <div><label for="createchandoriginate_callerid">Caller Id:</label></div>
+                    <div><input id="createchandoriginate_callerid"></div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doDial()" id="dial" title="Create a channel (from) and dial to <context> <to>">
+                            Dial
+                        </button>
+                    </div>
+                    <div><label for="from">From:</label></div>
+                    <div><input id="from"></div>
+                    <div><label for="to">To:</label></div>
+                    <div><input id="to"></div>
+                    <div><label for="context">Context:</label></div>
+                    <div><input id="context"></div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doDTMF()" id="senddtmf" title="Send a DTMF sequence to selected channel">DTMF
+                        </button>
+                    </div>
+                    <div><label for="dtmf">DTMF:</label></div>
+                    <div><input id="dtmf" value="*"></div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doRing()" id="ring">Ring</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doStopRing()" id="stopring">End Ring</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doMute()" id="mute">Mute</button>
+                    </div>
+                    <div><label for="mutedirection">Direction:</label></div>
+                    <div>
+                        <select id="mutedirection" name="mutedirection">
+                            <option value="both" selected="selected">both</option>
+                            <option value="in">in</option>
+                            <option value="out">out</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doUnMute()" id="unmute">Unmute</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doHold()" id="hold">Hold</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doUnHold()" id="unhold">Unhold</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doMoh()" id="moh">Moh</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doEndMoh()" id="endmoh">End Moh</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doSilence()" id="silence">Silence</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doEndSilence()" id="endsilence">End Silence</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doAnswer()" id="answer">Answer</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doHangup()" id="hangup">Hangup</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doSnoop()" id="snoop">Snoop</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doDialCh()" id="dialch">Dial</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doRedirect()" id="redirect"
+                                title="redirect selected channel to <ext> (sip refer)">Redirect
+                        </button>
+                    </div>
+                    <div><label for="redirect_ext">Ext:</label></div>
+                    <div><input id="redirect_ext"></div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doContinueInDialplan()" id="continue"
+                                title="make the selected channel exit from stasis app and continue to <context> <ext>">
+                            To Dialplan
+                        </button>
+                    </div>
+                    <div><label for="dp_context">Context:</label></div>
+                    <div><input id="dp_context"></div>
+                    <div><label for="dp_ext">Ext:</label></div>
+                    <div><input id="dp_ext"></div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doSetVariable()" id="setvariable"
+                                title="Set a variable on the selected channel">Set Variable
+                        </button>
+                    </div>
+                    <div><label for="variable_key">Name:</label></div>
+                    <div><input id="variable_key"></div>
+                    <div><label for="variable_value">Value:</label></div>
+                    <div><input id="variable_value"></div>
+                </li>
+            </ul>
+        </div>
+
+        <br>
+        <div>
+            <label>SIP Invite custom headers:</label>
+            <li><textarea cols="80" rows="4" id="sip_header">"PJSIP_HEADER(add,Alert-info)":";answer-after=0",
+"PJSIP_HEADER(add,Alert-info)":"info=alert-autoanswer"</textarea></li>
+        </div>
+
+    </div>
+
+    <div id="bridgecmdsbox" class="cmdsbox">
+
+        <div class="sectiontitle">
+            Bridges
+        </div>
+
+        <div class="tablebox">
+            <table id="bridgelist" class="table" border="1" width=600>
+                <tr>
+                    <th>Id</th>
+                    <th>Technology</th>
+                    <th>Type</th>
+                    <th>Channels</th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="cmds" class="gridalign">
+            <ul>
+                <li>
+                    <div>
+                        <button onClick="doCreateBridge()" id="createbridge">Create</button>
+                    </div>
+                    <div><label for="bridgetype">Type:</label></div>
+                    <div>
+                        <select id="bridgetype" name="bridgetype">
+                            <option value="mixing" selected="selected">mixing</option>
+                            <option value="holding">holding</option>
+                        </select>
+                    </div>
+                    <div><label for="dtmfev">dtmf events</label></div>
+                    <div><input type="checkbox" name="bridgeatt" value=",dtmf_events" id="dtmfev"/></div>
+                    <div><label for="proxym">proxy media</label></div>
+                    <div><input type="checkbox" name="bridgeatt" value=",proxy_media" id="proxym"/></div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doDeleteBridge()" id="deletebridge">Delete</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doAddChToBridge()" id="addchtobridge">Add Channel</button>
+                    </div>
+                    <div><label for="chrole">Role:</label></div>
+                    <div>
+                        <select id="chrole" name="chrole">
+                            <option value="partecipant" selected="selected">partecipant</option>
+                            <option value="announcer">announcer</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doRemoveChFromBridge()" id="removechfrombridge">Remove channel</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doMohBridge()" id="addmohtobridge">Moh</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doStopMohBridge()" id="stopmohfrombridge">Stop Moh</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doRecordBridge()" id="recordbridge">Record</button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button onClick="doStopRecordBridge()" id="stoprecordbridge">Stop Record</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div id="devicebox" class="cmdsbox">
+
+        <div class="sectiontitle">
+            Devices
+        </div>
+
+        <div class="tablebox">
+            <table id="devicelist" border="1" width=305>
+                <tr>
+                    <th>Name</th>
+                    <th>State</th>
+                </tr>
+            </table>
+        </div>
+        <div class="cmds">
+            <ul>
+                <li><textarea cols="37" rows="7" id="textmsg"></textarea></li>
+                <li>
+                    <label for="msgfrom">From:</label>
+                    <input id="msgfrom">
+                    <label for="msgto">To:</label>
+                    <input id="msgto">
+                </li>
+                <li>
+                    <button onClick="doSendMessage()" id="sendmsg">Send Msg</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="eventbox">
+        <ul id="events"></ul>
+    </div>
+
+    <footer>Copyright &copy; Daniele Pallastrelli 2017</footer>
+
+    <!-- dialogs -->
+
+    <div id="optionsDialog" class="modalDialog">
+        <div class="gridalign">
+            <a href="#close" title="Close" class="close">X</a>
+            <h2>Options</h2>
+            <p>This is a sample modal box that can be created using the powers of CSS3.</p>
+            <p>You could do a lot of things here like have a pop-up ad that shows when your website loads, or create a
+                login/register form for users.</p>
+
+            <ul>
+                <li>
+                    <div><input type="checkbox" value=",dtmf_events" id="showevents"/></div>
+                    <div><label for="showevents">show events</label></div>
+                </li>
+                <li>
+                    <div><input type="checkbox" value=",dtmf_events" id="dtmfev"/></div>
+                    <div><label for="dtmfev">show events</label></div>
+                </li>
+                <li>
+                    <div>
+                        <select id="evnum">
+                            <option value="50" selected="selected">50</option>
+                            <option value="100">100</option>
+                            <option value="-1">all</option>
+                        </select>
+                    </div>
+                    <div><label for="evnum">events num</label></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="aboutDialog" class="modalDialog">
+        <div>
+            <a href="#close" title="Close" class="close">X</a>
+            <h2>Asterisk&trade; ARI Tester version 0.1.4</h2>
+            <p>Copyright (C) Daniele Pallastrelli.</p>
+            <p>Visit the page of this project at
+                <a href="http://github.com/daniele77/aritester" target="_blank">github</a>
+                or contact me on twitter at
+                <a href="http://www.twitter.com/DPallastrelli" target="_blank">@DPallastrelli</a></p>
+            <p><a href="http://github.com/daniele77/aritester" target="_blank">Check for updates...</a></p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>
+
+
+
