@@ -3,9 +3,9 @@
 To connect video based webrtc endpoints ensure you load the codecs  and also libsrtp . 
 Overwrite the selective conf in this folders with the existing conf of asterisk  to run a basic webrtc video call . 
 
-These were tested with sipml5 on asterisk v17 . 
+These were tested with sipml5 on asterisk v17 with chan_sip. 
 
-## Generating self signed certs
+## Generating self-signed certs
 
 use the "ast_tls_cert" script in the "contrib/scripts" Asterisk source directory to
 make a self-signed certificate authority and an Asterisk certificate.
@@ -89,4 +89,118 @@ Disclaimer: this command is for informational purposes only.
 generate a client certificate for our SIP device.
 ```
 ./ast_tls_cert -m client -c ca.crt -k ca.key -C localhost -O "altanai" -d . -o malcolm
+```
+
+## Debugging 
+
+
+**Issue1**  Transport error
+```
+] ERROR[15167][C-00000014]: chan_sip.c:4344 __sip_reliable_xmit: Serious Network Trouble; __sip_xmit returns error for pkt data
+...
+ 0x7f668c008430 -- Strict RTP learning after ICE completion
+...
+ Auto fallthrough, channel 'SIP/1060-0000002c' status is 'CONGESTION'
+```
+\
+**solution** Remove ICE support 
+
+
+**Issue2** Module mistmatch between chan_sip and re_pjsip
+\
+**solution** Although chan_sip is depriciated but if you are using later versions of asterisk it may automatically already eb loading pjsip .
+To disable this you can use asterisk_cli to unload res_pjsip
+```shell script
+noload => res_pjsip.so
+noload => res_pjsip_pubsub.so
+noload => res_pjsip_session.so
+noload => chan_pjsip.so
+noload => res_pjsip_exten_state.so
+noload => res_pjsip_log_forwarder.so
+```
+
+**Issue3** No RTP engine was found. Do you have one loaded? on Asterisk 17.6.0  Linux x86_64
+```shell script
+
+Found peer '1060' for '1060' from 127.0.0.1:41386
+[Oct 29 15:32:59] ERROR[10375][C-00000002]: rtp_engine.c:489 ast_rtp_instance_new: No RTP engine was found. Do you have one loaded?
+[Oct 29 15:32:59] NOTICE[10375][C-00000002]: chan_sip.c:19680 send_check_user_failure_response: RTP init failure for device "1060" <sip:1060@127.0.0.1>;tag=c2ukemc9jf for INVITE, code = -9
+
+<--- Reliably Transmitting (no NAT) to 127.0.0.1:5060 --->
+SIP/2.0 503 Service Unavailable
+Via: SIP/2.0/WSS agughe5cmo73.invalid;branch=z9hG4bK4811407;received=127.0.0.1
+From: "1060" <sip:1060@127.0.0.1>;tag=c2ukemc9jf
+To: <sip:1061@127.0.0.1>;tag=as4964acae
+Call-ID: 2pnpo3cd1rkbucdva75m
+CSeq: 7410 INVITE
+Server: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY, INFO, PUBLISH, MESSAGE
+Supported: replaces, timer
+Reason: Q.850;cause=34
+Content-Length: 0
+```
+\
+**solution** see the module loaded for rtp 
+```shell script
+> module show like res_rtp
+Module                         Description                              Use Count  Status      Support Level
+0 modules loaded
+```
+If no module are founf then load modules for  res_rtp_asterisk and res_rtp_multicast.
+```shell script
+module load res_rtp_asterisk
+module load res_rtp_multicast
+
+> module show like res_rtp
+Module                         Description                              Use Count  Status      Support Level
+res_rtp_asterisk.so            Asterisk RTP Stack                       0          Running              core
+res_rtp_multicast.so           Multicast RTP Engine                     0          Running              core
+2 modules loaded
+```
+
+**Issue4** No SRTP module loaded, can't setup SRTP session.
+```shell script 
+[Oct 29 15:40:05] ERROR[10748][C-00000001]: chan_sip.c:6012 dialog_initialize_dtls_srtp: No SRTP module loaded, can't setup SRTP session.
+[Oct 29 15:40:05] NOTICE[10748][C-00000001]: chan_sip.c:19680 send_check_user_failure_response: RTP init failure for device "1060" <sip:1060@127.0.0.1>;tag=gkqno51k23 for INVITE, code = -9
+```
+\
+**Solution** check for srtp module 
+```shell script
+>module show like srtp
+Module                         Description                              Use Count  Status      Support Level
+0 modules loaded
+*CLI> 
+```
+If none is found load srtp module 
+```shell script
+> module load res_srtp.so
+
+*CLI> module show like srtp
+Module                         Description                              Use Count  Status      Support Level
+res_srtp.so                    Secure RTP (SRTP)                        0          Running              core
+1 modules loaded
+```
+
+**Issue5** 
+```shell script
+Scheduling destruction of SIP dialog '630a75140ec65e2e3893478a3d816012@127.0.0.1:5064' in 32000 ms (Method: INVITE)
+    -- SIP/1061-00000003 is circuit-busy
+Scheduling destruction of SIP dialog '630a75140ec65e2e3893478a3d816012@127.0.0.1:5064' in 32000 ms (Method: INVITE)
+  == Everyone is busy/congested at this time (1:0/1/0)
+    -- Executing [1061@public:5] Hangup("SIP/1060-00000002", "") in new stack
+  == Spawn extension (public, 1061, 5) exited non-zero on 'SIP/1060-00000002'
+Scheduling destruction of SIP dialog '2pnpovgm6b3um4nbu6sb' in 32000 ms (Method: INVITE)
+
+<--- Reliably Transmitting (no NAT) to 127.0.0.1:5060 --->
+SIP/2.0 603 Declined
+Via: SIP/2.0/WSS agughe5cmo73.invalid;branch=z9hG4bK3562038;received=127.0.0.1
+From: "1060" <sip:1060@127.0.0.1>;tag=ul6sh9iirq
+To: <sip:1061@127.0.0.1>;tag=as45129f0a
+Call-ID: 2pnpovgm6b3um4nbu6sb
+CSeq: 3053 INVITE
+Server: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY, INFO, PUBLISH, MESSAGE
+Supported: replaces, timer
+Reason: Q.850;cause=16
+Content-Length: 0
 ```
