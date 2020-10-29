@@ -425,7 +425,7 @@ No such command 'sip show peers' (type 'core show help sip show' for other possi
 module show like chan_sip.so 
 ```
 When module is installed 
-```commandline
+```shell script
 altanai-Inspiron-15-5578*CLI> module show like chan_sip.so
 Module                         Description                              Use Count  Status      Support Level
 chan_sip.so                    Session Initiation Protocol (SIP)        0         
@@ -433,7 +433,7 @@ chan_sip.so                    Session Initiation Protocol (SIP)        0
 ```
 
 when modules is not installed 
-```commandline
+```shell script
 altanai-Inspiron-15-5578*CLI> module show like chan_sip.so
 Module                         Description                              Use Count  Status      Support Level
 0 modules loaded
