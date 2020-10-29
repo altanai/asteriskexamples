@@ -1,0 +1,141 @@
+Inbound RTP Audio
+---------------
+
+RTCInboundRTPAudioStream_615560197 (inbound-rtp)
+Statistics RTCInboundRTPAudioStream_615560197
+timestamp	29/10/2020, 22:14:27
+ssrc	615560197
+isRemote	false
+mediaType	audio
+kind	audio
+trackId	RTCMediaStreamTrack_receiver_35
+transportId	RTCTransport_0_1
+codecId	RTCCodec_0_Inbound_0
+[codec]	PCMU (0)
+packetsReceived	10825
+[packetsReceived/s]	50.11220065984645
+fecPacketsReceived	0
+fecPacketsDiscarded	0
+bytesReceived	1732000
+[bytesReceived_in_bits/s]	64143.61684460346
+headerBytesReceived	129900
+[headerBytesReceived_in_bits/s]	4810.771263345259
+packetsLost	0
+lastPacketReceivedTimestamp	522720
+jitter	0.002
+
+
+Inbound RTP video
+---------------
+
+RTCInboundRTPVideoStream_1218418634 (inbound-rtp)
+Statistics RTCInboundRTPVideoStream_1218418634
+timestamp	29/10/2020, 22:13:23
+ssrc	1218418634
+isRemote	false
+mediaType	video
+kind	video
+trackId	RTCMediaStreamTrack_receiver_36
+transportId	RTCTransport_1_1
+firCount	0
+pliCount	494
+nackCount	0
+packetsReceived	8357
+[packetsReceived/s]	52.985851251268045
+bytesReceived	5758596
+[bytesReceived_in_bits/s]	309077.4674121138
+headerBytesReceived	100284
+[headerBytesReceived_in_bits/s]	5086.641720121733
+packetsLost	0
+lastPacketReceivedTimestamp	522656
+framesDecoded	1583
+[framesDecoded/s]	29.99199127430267
+keyFramesDecoded	1
+totalDecodeTime	2.1
+[totalDecodeTime/framesDecoded_in_ms]	1.200000000000001
+totalInterFrameDelay	53.339
+[totalInterFrameDelay/framesDecoded_in_ms]	33.16666666666658
+totalSquaredInterFrameDelay	1.84153
+[interFrameDelayStDev_in_ms]	2.5766041389571233
+decoderImplementation	FFmpeg
+codecId	RTCCodec_1_Inbound_99
+[codec]	H264 (99, level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42001f)
+qpSum	49951
+[qpSum/framesDecoded]
+
+
+Outbound RTP Audio
+----------------------
+
+RTCOutboundRTPAudioStream_35969274 (outbound-rtp)
+Statistics RTCOutboundRTPAudioStream_35969274
+timestamp	29/10/2020, 22:15:34
+ssrc	35969274
+isRemote	false
+mediaType	audio
+kind	audio
+trackId	RTCMediaStreamTrack_sender_35
+transportId	RTCTransport_0_1
+codecId	RTCCodec_0_Outbound_0
+[codec]	PCMU (0)
+mediaSourceId	RTCAudioSource_35
+packetsSent	14228
+[packetsSent/s]	50.062328691584455
+retransmittedPacketsSent	0
+[retransmittedPacketsSent/s]	0
+bytesSent	2276480
+[bytesSent_in_bits/s]	64079.780725228105
+headerBytesSent	170736
+[headerBytesSent_in_bits/s]	4805.983554392108
+retransmittedBytesSent	0
+[retransmittedBytesSent_in_bits/s]	0
+
+
+Outbound RTP Video
+--------------------------
+
+RTCOutboundRTPVideoStream_4160427513 (outbound-rtp)
+Statistics RTCOutboundRTPVideoStream_4160427513
+timestamp	29/10/2020, 22:14:50
+ssrc	4160427513
+isRemote	false
+mediaType	video
+kind	video
+trackId	RTCMediaStreamTrack_sender_36
+transportId	RTCTransport_1_1
+codecId	RTCCodec_1_Outbound_99
+[codec]	H264 (99, level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42001F)
+firCount	0
+pliCount	0
+nackCount	0
+mediaSourceId	RTCVideoSource_36
+packetsSent	13131
+[packetsSent/s]	53.13542597381116
+retransmittedPacketsSent	0
+[retransmittedPacketsSent/s]	0
+bytesSent	9032831
+[bytesSent_in_bits/s]	315676.56315520505
+headerBytesSent	157572
+[headerBytesSent_in_bits/s]	5101.0008934858715
+retransmittedBytesSent	0
+[retransmittedBytesSent_in_bits/s]	0
+framesEncoded	7121
+[framesEncoded/s]	27.0689905904321
+keyFramesEncoded	3
+totalEncodeTime	33.047
+[totalEncodeTime/framesEncoded_in_ms]	4.185185185185168
+totalEncodedBytesTarget	0
+[totalEncodedBytesTarget_in_bits/s]	0
+framesSent	7121
+hugeFramesSent	3
+totalPacketSendDelay	206.466
+[totalPacketSendDelay/packetsSent_in_ms]	15.037735849056547
+qualityLimitationReason	none
+qualityLimitationResolutionChanges	0
+encoderImplementation	OpenH264
+qpSum	225960
+[qpSum/framesEncoded]	32.44444444444444
+frameWidth	640
+frameHeight	480
+framesPerSecond
+

@@ -600,7 +600,7 @@ OTHER DEALINGS IN THE SOFTWARE.
             // var app = document.getElementById("application").value;
 
             // var ip = "192.168.1.114:8088";
-            var ip = "127.0.0.1:8020";
+            var ip = "localhost:8089";
             var user = "asterisk";
             var psw = "asterisk";
             var app = "hello-world";
@@ -614,7 +614,8 @@ OTHER DEALINGS IN THE SOFTWARE.
             tester.psw = psw;
             tester.app = app;
 
-            var service = new WebSocket('ws://' + ip + '/ari/events?api_key=' + user + ':' + psw + '&app=' + app + '&subscribeAll=true');
+<!--            var service = new WebSocket('ws://' + ip + '/ari/events?api_key=' + user + ':' + psw + '&app=' + app + '&subscribeAll=true');-->
+            var service = new WebSocket('wss://' + ip + '/ari/events?api_key=' + user + ':' + psw + '&app=' + app + '&subscribeAll=true');
             tester.socket = service;
 
             service.onmessage = function (event) {
